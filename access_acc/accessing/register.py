@@ -1,8 +1,10 @@
-from validation.name import valid_name
-from validation.email import valid_email
-from validation.phone import valid_phone
-from validation.password import valid_password
+from access_acc.validation.name import valid_name
+from access_acc.validation.email import valid_email
+from access_acc.validation.phone import valid_phone
+from access_acc.validation.password import valid_password
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import insert
+from datetime import datetime
 
 
 def register_account(session: sessionmaker, schema):
@@ -69,8 +71,9 @@ def register_account(session: sessionmaker, schema):
             continue
 
     new_user = schema(name=user_name, email=user_email,
-                      phone=user_phone, password=user_password)
+                      phone=user_phone, password=user_password, created_at=datetime.now().date())
     session.add(new_user)
+
     session.commit()
 
     print("Account was successfully created!")

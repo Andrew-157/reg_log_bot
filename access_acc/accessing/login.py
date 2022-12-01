@@ -49,15 +49,14 @@ def login_into_acc(session: sessionmaker, schema):
 
     while True:
 
-        if password_attempts_counter > 3:
+        if password_attempts_counter == 3:
             print("Cannot login into account, wrong password")
-            login_status = "Failed to login"
-            return login_status
+            return ""
 
         user_password = input("Login/Enter account's password: ")
 
         if user_password != true_password:
-            password_counter += 1
+            password_attempts_counter += 1
             print(
                 f"Wrong password, {3-password_attempts_counter} attempts left")
             continue
@@ -74,7 +73,7 @@ def login_into_acc(session: sessionmaker, schema):
 
     while True:
 
-        user_phone = input("Login/Enter phone for your account: ")
+        user_phone = input("Login/Enter account's phone number: ")
 
         if user_phone != true_phone:
             print("Your account has another phone number, try again, please.")
@@ -82,18 +81,20 @@ def login_into_acc(session: sessionmaker, schema):
 
         while True:
 
-            if phone_attempts_counter > 3:
-                print("Cannot login into account, failed phone number authorization")
-                login_status = "Login failed, failed authorization with phone number"
+            if phone_attempts_counter == 3:
+                print("Cannot login into account, failed phone number authorization.")
+                return ""
 
+            print("We'll send you a code, please, enter it in the field")
             code = randint(1000, 9999)
             print(code)
 
             user_code = input("Please, enter the code that we sent you: ")
-            if user_code != code:
+            if int(user_code) != code:
                 phone_attempts_counter += 1
                 print(
                     f"Wrong code, try again: {3-phone_attempts_counter} attempts left")
                 continue
-
-    return login_status
+            else:
+                print("Successfully logged into account.")
+                return user_name

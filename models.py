@@ -12,3 +12,5 @@ class Account(Base):
     name = Column(String(26), nullable=False)
     email = Column(String(35), nullable=False)
     phone = Column(String(14), nullable=False)
+    password = Column(String(15), nullable=False)
+    created_at = Column(Date(), nullable=False)
