@@ -9,7 +9,7 @@ def register_account(session: sessionmaker, schema):
 
     while True:
 
-        user_name = input("Enter name for you account: ")
+        user_name = input("Register/Enter name for you account: ")
 
         if session.query(schema).filter_by(name=user_name).first():
             print(
@@ -26,7 +26,7 @@ def register_account(session: sessionmaker, schema):
 
     while True:
 
-        user_email = input("Enter email for your account: ")
+        user_email = input("Register/Enter email for your account: ")
 
         if session.query(schema).filter_by(email=user_email).first():
             print(
@@ -42,7 +42,7 @@ def register_account(session: sessionmaker, schema):
 
     while True:
 
-        user_phone = input("Enter phone number for your account: ")
+        user_phone = input("Register/Enter phone number for your account: ")
 
         if session.query(schema).filter_by(phone=user_phone).first():
             print(
@@ -58,7 +58,7 @@ def register_account(session: sessionmaker, schema):
 
     while True:
 
-        user_password = input("Enter password for your account: ")
+        user_password = input("Register/Enter password for your account: ")
 
         password_status = valid_password(user_password)
 
@@ -67,3 +67,11 @@ def register_account(session: sessionmaker, schema):
         else:
             print(password_status)
             continue
+
+    new_user = schema(name=user_name, email=user_email,
+                      phone=user_phone, password=user_password)
+    session.add(new_user)
+    session.commit()
+
+    print("Account was successfully created!")
+    return user_name
